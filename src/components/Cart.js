@@ -39,7 +39,7 @@ class Cart extends Component {
               display: 'flex',justifyContent:'space-around',flexWrap: 'wrap'}}>
           {items.map((item)=> (
             <div key={item.id} style={{border:'1px solid blue', textAlign:'center', margin:'10px', maxWidth: '350px'}}>
-            <img src={item.image.href} alt={item.name} style={{width:'300px', height:'250px'}}/>
+            <img src={item.image.href} alt={item.name} style={{width:'200px', height:'200px'}}/>
             <h1>{item.name}</h1>
             <p>{item.description}</p>
             <h4>Quantity: {item.quantity}</h4>
