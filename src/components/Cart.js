@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { GetCart, RemoveFromCart } from '../utils/moltin.js'
 import { Link } from 'react-router-dom'
+import { Container, ItemContainer, Button, Image, LinkContainer } from './StyledComponents'
 
 class Cart extends Component {
   state={
@@ -34,25 +35,24 @@ class Cart extends Component {
     return loading === true
       ? <h1>Loading...</h1>
       : <div>
-          <h1>Your Cart Items</h1>
-          <div style={{
-              display: 'flex',justifyContent:'space-around',flexWrap: 'wrap'}}>
+          <h1 style={{textAlign:'center'}}>Your Cart Items</h1>
+          <Container>
           {items.map((item)=> (
-            <div key={item.id} style={{border:'1px solid blue', textAlign:'center', margin:'10px', maxWidth: '350px'}}>
-            <img src={item.image.href} alt={item.name} style={{width:'200px', height:'200px'}}/>
-            <h1>{item.name}</h1>
-            <p>{item.description}</p>
-            <h4>Quantity: {item.quantity}</h4>
-            <h3>Price: {item.meta.display_price.with_tax.value.formatted}</h3>
-            <button onClick={this.removeFromCart.bind(this,item.id)}>Remove from Cart</button>
-            </div>
+            <ItemContainer key={item.id}>
+              <Image src={item.image.href} alt={item.name} />
+              <h1>{item.name}</h1>
+              <p>{item.description}</p>
+              <h4>Quantity: {item.quantity}</h4>
+              <h3>Price: {item.meta.display_price.with_tax.value.formatted}</h3>
+              <Button onClick={this.removeFromCart.bind(this,item.id)}>Remove from Cart</Button>
+            </ItemContainer>
           ))}
-          </div>
-          <div style={{display: 'flex',flexDirection: 'column',alignItems: 'center',margin: '10px'}}>
-          <h3>Total Payable: {totalPrice}</h3>
-          <Link to='/checkout'>Checkout</Link>
-          <Link to='/'>Go Back</Link>
-          </div>
+          </Container>
+          <LinkContainer>
+            <h3>Total Payable: {totalPrice}</h3>
+              <Link to='/checkout'>Checkout</Link>
+              <Link to='/'>Go Back</Link>
+          </LinkContainer>
       </div>
   }
 }

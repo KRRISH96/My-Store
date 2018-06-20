@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { Checking } from '../utils/moltin.js'
+import { StyledCheckout } from './StyledComponents'
 
 class Checkout extends Component {
  state = {
@@ -38,7 +39,7 @@ class Checkout extends Component {
     const { checkoutResults,loading } = this.state
     return loading === true
       ? <h1>Loading...</h1>
-      : <div style={{display:'flex', flexDirection: 'column',alignItems:'center'}}>
+      : <StyledCheckout>
           <h1>Checkout</h1>
           <h3>Name:{checkoutResults.data.customer.name}</h3>
           <h3>Email: {checkoutResults.data.customer.email}</h3>
@@ -65,8 +66,10 @@ class Checkout extends Component {
             </div>
           </div>
           <h2>Total Price: {checkoutResults.data.meta.display_price.with_tax.formatted}</h2>
-          <Link to='/cart'>Go Back</Link>
-        </div>
+            <Link to='/cart'>
+                Go Back
+            </Link>
+        </StyledCheckout>
   }
 }
 

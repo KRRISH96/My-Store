@@ -3,6 +3,7 @@ import { GetAllProducts, AddtoCart } from '../utils/moltin.js'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import Cart from './Cart'
 import Checkout from './Checkout'
+import { Container, ItemContainer, Button, Image } from './StyledComponents'
 
 class App extends Component {
   state = {
@@ -30,27 +31,30 @@ class App extends Component {
     return loading === true
       ? <h1>Loading...</h1>
       : <Router>
-        <div>
-        <Route exact path='/' render={(props) => (
-          <div style={{display: 'flex', justifyContent:'space-around',flexWrap: 'wrap'}}>
-          {products.map((product,index) => (
-            <div key={product.id} style={{border:'1px solid blue', textAlign:'center', margin:'10px', maxWidth: '350px'}}>
-            <img src={files[index].link.href} alt={product.name} style={{width:'300px', height:'250px'}} />
-            <h1>{product.name}</h1>
-            <p>{product.description}</p>
-            <p>{product.meta.display_price.with_tax.formatted}</p>
-            <button onClick={this.addCart.bind(this,product.id)}>Add to Cart</button>
-            <p>* Product quantity limited to 4 per user</p>
-            </div>
-          ))}
-          <Link to='/cart' style={{background: 'yellow', padding: '10px', display: 'flex', maxWidth: '70px',height: '70px',justifyContent: 'center'}}>
-          My Cart
-          </Link>
+          <div>
+          <h1>My-Store</h1>
+            <Route exact path='/' render={(props) => (
+              <div>
+              <Link to='/cart' style={{left: '50%'}}>
+              My Cart
+              </Link>
+              <Container>
+              {products.map((product,index) => (
+                <ItemContainer key={product.id}>
+                <Image src={files[index].link.href} alt={product.name}  />
+                <h1>{product.name}</h1>
+                <p>{product.description}</p>
+                <p><strong>{product.meta.display_price.with_tax.formatted}</strong></p>
+                <Button onClick={this.addCart.bind(this,product.id)}>Add to Cart</Button>
+                <p>* Product quantity limited to 4 per user</p>
+                </ItemContainer>
+              ))}
+              </Container>
+              </div>
+            )} />
+            <Route path='/cart' component={Cart} />
+            <Route path='/checkout' component={Checkout} />
           </div>
-        )} />
-          <Route path='/cart' component={Cart} />
-          <Route path='/checkout' component={Checkout} />
-        </div>
         </Router>
   }
 }
