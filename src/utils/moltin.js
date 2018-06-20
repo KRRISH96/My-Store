@@ -9,4 +9,10 @@ export const GetAllProducts = Moltin.Products.With('files, main_images').All().t
   return products
 });
 
-export const GetProduct = (Id) => Moltin.Products.Get(Id)
+export const GetProduct = (Id) => Moltin.Products.Get(Id);
+
+export const AddtoCart = (reference,productId,quantity) => Moltin.Cart(reference)
+  .AddProduct(productId, quantity)
+  .then(cart => {
+    return cart
+  })
