@@ -29,8 +29,8 @@ export const RemoveFromCart = (reference,itemId,quantity) => Moltin.Cart(referen
     return cart
   })
 
-export const Checking = (reference, customer, billing, shipping) => Moltin.Cart(reference)
-    .Checkout(customer, billing, shipping)
+export const Checking = (reference, customer, billing) => Moltin.Cart(reference)
+    .Checkout(customer, billing)
     .then(order => {
       return order
     })

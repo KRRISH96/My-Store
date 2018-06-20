@@ -23,23 +23,15 @@ class Checkout extends Component {
    })
  }
 
- handleSubmit = (e) => {
-   const {reference, email,name,first_name, last_name, line_1, line_2, city, postcode, country,checkData} = this.state
-   const customer = {
-     email,
-     name
-   }
+ async handleSubmit (e) {
+   const {reference, email,name,first_name, last_name, line_1, line_2, city, postcode, country} = this.state
+   console.log(this)
+   const customer = { email, name }
    const billing = {
      first_name, last_name, line_1, line_2, city, postcode, country
    }
-   console.log(customer)
-   console.log(billing)
-   Checking(reference,customer,billing)
-      .then(res =>{this.setState({
-        checkData: res,
-        })
-      })
-      .then(console.log(checkData))
+   const checkoutResults = await Checking(reference,customer,billing)
+   console.log(checkoutResults)
    e.preventDefault();
  }
  //
@@ -48,12 +40,29 @@ class Checkout extends Component {
  //   console.log(checkingResults)
  // }
 
+// async hi() {
+//   const {reference, email,name,first_name, last_name, line_1, line_2, city, postcode, country,checkData,detailesFilled} = this.state
+//   const customer = {
+//     email,
+//     name
+//   }
+//   const billing = {
+//     first_name, last_name, line_1, line_2, city, postcode, country
+//   }
+//   console.log(customer)
+//   console.log(billing)
+//   if(detailesFilled) {
+//     const checkoutResults = await Checking(reference,customer,billing)
+//   console.log(checkoutResults)
+// }
+// }
+
   render() {
-    const {reference, email,name,first_name, last_name, line_1, line_2, city, postcode, country} = this.state
+    const { email,name,first_name, last_name, line_1, line_2, city, postcode, country} = this.state
     return (
       <div>
         <h1>Checkout page</h1>
-        <form onSubmit={this.handleSubmit}>
+        <form>
           <label htmlFor='email'>Email</label>
           <input
             type='email'
@@ -135,7 +144,7 @@ class Checkout extends Component {
             value={country}
             onChange={this.handleCustomer}
           />
-          <button>Submit</button>
+          <button onClick={this.handleSubmit.bind(this)}>Submit</button>
         </form>
         <Link to='/cart'>Go Back</Link>
       </div>
