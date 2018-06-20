@@ -26,6 +26,7 @@ class Cart extends Component {
       totalPrice: cartItems.meta.display_price.with_tax.formatted,
       loading: false
     })
+    alert('Product Removed from cart');
   }
 
   render() {

@@ -22,6 +22,7 @@ class App extends Component {
 
   async addCart(id) {
     await AddtoCart('123',id,1);
+    alert('Product added to cart')
   }
 
   render() {
