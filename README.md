@@ -8,6 +8,7 @@ A basic eCommerce site
 
 # App Structure
 This app was scaffolded with `create-react-app`
+
 -> `utils/moltin.js` - where all the API calls made
 
 -> `components` folder
