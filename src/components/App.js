@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { GetAllProducts, AddtoCart } from '../utils/moltin.js'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import Cart from './Cart'
 
 class App extends Component {
   state = {
@@ -18,28 +20,36 @@ class App extends Component {
   };
 
   async addCart(id) {
-    const cartItems = await AddtoCart('123',id,1)
-    console.log(cartItems,'items')
+    console.log(id)
+    const addItems = await AddtoCart('123',id,1);
+    console.log(addItems,'items')
   }
 
   render() {
     const { products, files, loading } = this.state;
     return loading === true
       ? <h1>Loading...</h1>
-      : <div>
+      : <Router>
+        <div>
+        <Route exact path='/' render={(props) => (
           <div style={{display: 'flex', justifyContent:'space-around',flexWrap: 'wrap'}}>
-            {products.map((product,index) => (
-              <div key={product.id} style={{border:'1px solid blue', textAlign:'center', margin:'10px', maxWidth: '350px'}}>
-                <img src={files[index].link.href} alt={product.name} style={{width:'300px', height:'250px'}}></img>
-                <h1>{product.name}</h1>
-                <p>{product.description}</p>
-                <p>{product.meta.display_price.with_tax.formatted}</p>
-                <button onClick={this.addCart.bind(this,product.id)}>Add to Cart</button>
-              </div>
-            ))}
+          {products.map((product,index) => (
+            <div key={product.id} style={{border:'1px solid blue', textAlign:'center', margin:'10px', maxWidth: '350px'}}>
+            <img src={files[index].link.href} alt={product.name} style={{width:'300px', height:'250px'}} />
+            <h1>{product.name}</h1>
+            <p>{product.description}</p>
+            <p>{product.meta.display_price.with_tax.formatted}</p>
+            <button onClick={this.addCart.bind(this,product.id)}>Add to Cart</button>
+            </div>
+          ))}
           </div>
-          <button>CheckOut</button>
+        )} />
+          <Link to='/cart'>
+            My Cart
+          </Link>
+          <Route path='/cart' component={Cart} />
         </div>
+        </Router>
   }
 }
 
