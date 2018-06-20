@@ -4,128 +4,45 @@ import { Checking } from '../utils/moltin.js'
 
 class Checkout extends Component {
  state = {
-   reference: '123',
-   email: '',
-   name: '',
-   first_name: '',
-   last_name: '',
-   line_1: '',
-   line_2: '',
-   city: '',
-   postcode: '',
-   country: '',
-   checkData: {}
+  reference: '123',
+  email:'test@example.com',
+   name: 'Test',
+  first_name:'Test',
+  last_name:'Function',
+  line_1:'#123, street5',
+  line_2: 'test state, country',
+  city:'',
+  postcode:'123456',
+  county: 'ABC',
+  country: 'US',
+  checkoutResults: {},
+  loading: true
  }
 
- handleCustomer = (e) => {
+
+  async componentDidMount() {
+   const {reference, email,name,first_name, last_name, line_1, line_2, city, postcode, county, country} = this.state
+   const customer = { email, name }
+   const billing = {
+     first_name, last_name, line_1, line_2, city, postcode,county,  country
+   }
+   const checkoutResults = await Checking(reference,customer,billing);
    this.setState({
-       [e.target.name]: e.target.value
+     checkoutResults,
+     loading: false
    })
  }
 
-  async handleSubmit() {
-   const {reference, email,name,first_name, last_name, line_1, line_2, city, postcode, country} = this.state
-   const customer = { email, name }
-   const billing = {
-     first_name, last_name, line_1, line_2, city, postcode, country
-   }
-   console.log(Checking(reference,customer,billing))
-   const checkoutResults = await Checking(reference,customer,billing);
-   console.log(checkoutResults)
- }
-
   render() {
-    const { email,name,first_name, last_name, line_1, line_2, city, postcode, country} = this.state
-    return (
-      <div>
-        <h1>Checkout page</h1>
-        <form>
-          <label htmlFor='email'>Email</label>
-          <input
-            type='email'
-            id='email'
-            placeholder='yourmail@example.com'
-            name='email'
-            value={email}
-            onChange={this.handleCustomer}
-          />
-          <label htmlFor='name'>Name</label>
-          <input
-            type='text'
-            id='name'
-            placeholder='Your Name'
-            name='name'
-            value={name}
-            onChange={this.handleCustomer}
-          />
-          <label htmlFor='first_name'>First Name</label>
-          <input
-            type='text'
-            id='first_name'
-            placeholder='First Name'
-            name='first_name'
-            value={first_name}
-            onChange={this.handleCustomer}
-          />
-          <label htmlFor='last_name'>Last Name</label>
-          <input
-            type='text'
-            id='last_name'
-            placeholder='Last Name'
-            name='last_name'
-            value={last_name}
-            onChange={this.handleCustomer}
-          />
-          <label htmlFor='line_1'>Address line-1</label>
-          <input
-            type='text'
-            id='line_1'
-            placeholder='#123, abc colony'
-            name='line_1'
-            value={line_1}
-            onChange={this.handleCustomer}
-          />
-          <label htmlFor='line_2'>Address line-2</label>
-          <input
-            type='text'
-            id='line_2'
-            placeholder='state,country'
-            name='line_2'
-            value={line_2}
-            onChange={this.handleCustomer}
-          />
-          <label htmlFor='city'>City</label>
-          <input
-            type='text'
-            id='city'
-            placeholder='city'
-            name='city'
-            value={city}
-            onChange={this.handleCustomer}
-          />
-          <label htmlFor='postcode'>Postcode</label>
-          <input
-            type='text'
-            id='postcode'
-            placeholder='state,country'
-            name='postcode'
-            value={postcode}
-            onChange={this.handleCustomer}
-          />
-          <label htmlFor='country'>Country</label>
-          <input
-            type='text'
-            id='country'
-            placeholder='country'
-            name='country'
-            value={country}
-            onChange={this.handleCustomer}
-          />
-        </form>
-        <button onClick={this.handleSubmit.bind(this)}>Submit</button>
-        <Link to='/cart'>Go Back</Link>
-      </div>
-    )
+    const { checkoutResults,loading } = this.state
+    console.log(checkoutResults,'im at render')
+    return loading === true
+      ? <h1>Loading...</h1>
+      : <div>
+          <h1>Checkout</h1>
+          <p>Name:{checkoutResults.data.customer.name}</p>
+          <Link to='/cart'>Go Back</Link>
+        </div>
   }
 }
 
