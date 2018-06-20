@@ -23,39 +23,16 @@ class Checkout extends Component {
    })
  }
 
- async handleSubmit (e) {
+  async handleSubmit() {
    const {reference, email,name,first_name, last_name, line_1, line_2, city, postcode, country} = this.state
-   console.log(this)
    const customer = { email, name }
    const billing = {
      first_name, last_name, line_1, line_2, city, postcode, country
    }
-   const checkoutResults = await Checking(reference,customer,billing)
+   console.log(Checking(reference,customer,billing))
+   const checkoutResults = await Checking(reference,customer,billing);
    console.log(checkoutResults)
-   e.preventDefault();
  }
- //
- // async checkoutDetails(reference,customer,billing) {
- //   const checkingResults = await Checking(reference,customer,billing)
- //   console.log(checkingResults)
- // }
-
-// async hi() {
-//   const {reference, email,name,first_name, last_name, line_1, line_2, city, postcode, country,checkData,detailesFilled} = this.state
-//   const customer = {
-//     email,
-//     name
-//   }
-//   const billing = {
-//     first_name, last_name, line_1, line_2, city, postcode, country
-//   }
-//   console.log(customer)
-//   console.log(billing)
-//   if(detailesFilled) {
-//     const checkoutResults = await Checking(reference,customer,billing)
-//   console.log(checkoutResults)
-// }
-// }
 
   render() {
     const { email,name,first_name, last_name, line_1, line_2, city, postcode, country} = this.state
@@ -144,8 +121,8 @@ class Checkout extends Component {
             value={country}
             onChange={this.handleCustomer}
           />
-          <button onClick={this.handleSubmit.bind(this)}>Submit</button>
         </form>
+        <button onClick={this.handleSubmit.bind(this)}>Submit</button>
         <Link to='/cart'>Go Back</Link>
       </div>
     )
