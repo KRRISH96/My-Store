@@ -44,7 +44,7 @@ class App extends Component {
           ))}
           </div>
         )} />
-          <Link to='/cart'>
+          <Link to='/cart' style={{background: 'yellow', padding: '10px', display: 'flex', maxWidth: '70px',justifyContent: 'center', position: 'absolute', left:'50%'}}>
             My Cart
           </Link>
           <Route path='/cart' component={Cart} />

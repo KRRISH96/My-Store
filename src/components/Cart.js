@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { GetCart, RemoveFromCart } from '../utils/moltin.js'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-class Checkout extends Component {
+class Cart extends Component {
   state={
     cartItems: [],
     totalPrice: 0,
@@ -52,4 +52,4 @@ class Checkout extends Component {
   }
 }
 
-export default Checkout
+export default Cart
