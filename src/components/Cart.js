@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { GetCart, RemoveFromCart } from '../utils/moltin.js'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
 class Checkout extends Component {
   state={
@@ -21,6 +22,12 @@ class Checkout extends Component {
   async removeFromCart(id) {
     console.log(id)
     const removeItems = await RemoveFromCart('123',id,1);
+    const cartItems = await GetCart('123')
+    this.setState({
+      items: [...cartItems.data],
+      totalPrice: cartItems.meta.display_price.with_tax,
+      loading: false
+    })
     console.log(removeItems,'items')
   }
 
@@ -28,7 +35,7 @@ class Checkout extends Component {
     const { items, totalPrice, loading } = this.state
     return loading === true
       ? <h1>Loading...</h1>
-      : <div style={{display: 'flex', justifyContent:'space-around',flexWrap: 'wrap'}}>
+      : <div style={{display: 'flex',       justifyContent:'space-around',flexWrap: 'wrap'}}>
           <h1>Your Cart Items</h1>
           {items.map((item)=> (
             <div key={item.id} style={{border:'1px solid blue', textAlign:'center', margin:'10px', maxWidth: '350px'}}>
@@ -40,6 +47,7 @@ class Checkout extends Component {
             <button onClick={this.removeFromCart.bind(this,item.id)}>Remove from Cart</button>
             </div>
           ))}
+          <Link to='/'>Go Back</Link>
       </div>
   }
 }
