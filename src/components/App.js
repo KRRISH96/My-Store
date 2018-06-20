@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { GetAllProducts, AddtoCart } from '../utils/moltin.js'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import Cart from './Cart'
+import Checkout from './Checkout'
 
 class App extends Component {
   state = {
@@ -20,9 +21,7 @@ class App extends Component {
   };
 
   async addCart(id) {
-    console.log(id)
-    const addItems = await AddtoCart('123',id,1);
-    console.log(addItems,'items')
+    await AddtoCart('123',id,1);
   }
 
   render() {
@@ -40,14 +39,16 @@ class App extends Component {
             <p>{product.description}</p>
             <p>{product.meta.display_price.with_tax.formatted}</p>
             <button onClick={this.addCart.bind(this,product.id)}>Add to Cart</button>
+            <p>* Product quantity limited to 4 per user</p>
             </div>
           ))}
+          <Link to='/cart' style={{background: 'yellow', padding: '10px', display: 'flex', maxWidth: '70px',height: '70px',justifyContent: 'center'}}>
+          My Cart
+          </Link>
           </div>
         )} />
-          <Link to='/cart' style={{background: 'yellow', padding: '10px', display: 'flex', maxWidth: '70px',justifyContent: 'center', position: 'absolute', left:'50%'}}>
-            My Cart
-          </Link>
           <Route path='/cart' component={Cart} />
+          <Route path='/checkout' component={Checkout} />
         </div>
         </Router>
   }

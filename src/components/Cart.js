@@ -13,30 +13,29 @@ class Cart extends Component {
     const cartItems = await GetCart('123')
     this.setState({
       items: [...cartItems.data],
-      totalPrice: cartItems.meta.display_price.with_tax,
+      totalPrice: cartItems.meta.display_price.with_tax.formatted,
       loading: false
     })
-    console.log(cartItems)
   }
 
   async removeFromCart(id) {
-    console.log(id)
-    const removeItems = await RemoveFromCart('123',id,1);
+    await RemoveFromCart('123',id,1);
     const cartItems = await GetCart('123')
     this.setState({
       items: [...cartItems.data],
-      totalPrice: cartItems.meta.display_price.with_tax,
+      totalPrice: cartItems.meta.display_price.with_tax.formatted,
       loading: false
     })
-    console.log(removeItems,'items')
   }
 
   render() {
     const { items, totalPrice, loading } = this.state
     return loading === true
       ? <h1>Loading...</h1>
-      : <div style={{display: 'flex',       justifyContent:'space-around',flexWrap: 'wrap'}}>
+      : <div>
           <h1>Your Cart Items</h1>
+          <div style={{
+              display: 'flex',justifyContent:'space-around',flexWrap: 'wrap'}}>
           {items.map((item)=> (
             <div key={item.id} style={{border:'1px solid blue', textAlign:'center', margin:'10px', maxWidth: '350px'}}>
             <img src={item.image.href} alt={item.name} style={{width:'300px', height:'250px'}}/>
@@ -47,7 +46,12 @@ class Cart extends Component {
             <button onClick={this.removeFromCart.bind(this,item.id)}>Remove from Cart</button>
             </div>
           ))}
+          </div>
+          <div style={{display: 'flex',flexDirection: 'column',alignItems: 'center',margin: '10px'}}>
+          <h3>Total Payable: {totalPrice}</h3>
+          <Link to='/checkout'>Checkout</Link>
           <Link to='/'>Go Back</Link>
+          </div>
       </div>
   }
 }

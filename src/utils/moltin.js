@@ -6,7 +6,6 @@ const Moltin = MoltinGateway({
 })
 
 export const GetAllProducts = Moltin.Products.With('files, main_images').All().then(products => {
-  console.log(products)
   return products
 });
 
@@ -29,3 +28,9 @@ export const RemoveFromCart = (reference,itemId,quantity) => Moltin.Cart(referen
   .then(cart => {
     return cart
   })
+
+export const Checking = (reference, customer, billing, shipping) => Moltin.Cart(reference)
+    .Checkout(customer, billing, shipping)
+    .then(order => {
+      return order
+    })
